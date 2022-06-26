@@ -6,13 +6,16 @@ import { AppLogoHeader, Button, Container, Content, Text, TextInput, Touchable, 
 /* =============================================================================
 <LoginScreen />
 ============================================================================= */
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
 
-  const _handleLinkPress = () => {
-    // navigation.navigate('Register')
+  const _handleRegisterPress = () => {
+    navigation.navigate('Register')
+  };
+  const _handleForgotPasswordPress = () => {
+    navigation.navigate('ForgotPassword')
   };
 
   return (
@@ -33,8 +36,11 @@ const LoginScreen = () => {
         <View center>
           <Button title='Sign in' />
         </View>
-        <Touchable center style={styles.link} onPress={_handleLinkPress}>
+        <Touchable center style={styles.link} onPress={_handleRegisterPress}>
           <Text sm style={styles.linkTxt}>Or Sign up</Text>
+        </Touchable>
+        <Touchable center style={styles.link} onPress={_handleForgotPasswordPress}>
+          <Text sm style={styles.linkTxt}>Forgot Password ?</Text>
         </Touchable>
       </Content>
     </Container>

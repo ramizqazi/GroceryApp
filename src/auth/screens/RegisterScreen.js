@@ -45,21 +45,6 @@ const RegisterScreen = () => {
           placeholder='First Name'
         />
         <TextInput
-          value={firstName}
-          onChange={setFirstName}
-          placeholder='First Name'
-        />
-        <TextInput
-          value={firstName}
-          onChange={setFirstName}
-          placeholder='First Name'
-        />
-        <TextInput
-          value={firstName}
-          onChange={setFirstName}
-          placeholder='First Name'
-        />
-        <TextInput
           value={lastName}
           placeholder='Last Name'
           onChange={setLastName}

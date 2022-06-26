@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AuthStack from '../auth/screens/AuthStack';
 
-import { changeAuthState } from '../auth/redux/actions';
+// import { changeAuthState } from '../auth/redux/actions';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,21 +17,21 @@ const AppNavigation = () => {
   const [initializing, setInitializing] = useState(true);
 
   // firebase user state check 
-  useEffect(() => {
-    FirebaseAuth().onAuthStateChanged(async (user) => {
-      if (user) {
-        changeAuthState(user.toJSON());
-      }
-      setInitializing(false);
-    })
-  }, [])
+  // useEffect(() => {
+  //   FirebaseAuth().onAuthStateChanged(async (user) => {
+  //     if (user) {
+  //       changeAuthState(user.toJSON());
+  //     }
+  //     setInitializing(false);
+  //   })
+  // }, [])
 
-  if (initializing) {
-    return null;
-  }
+  // if (initializing) {
+  //   return null;
+  // }
 
   return (
-    <NavigationContainer theme={THEME} onReady={_handleOnReady}>
+    <NavigationContainer theme={THEME}>
       <StatusBar translucent barStyle='dark-content' backgroundColor='transparent' />
       <Stack.Navigator
         screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
@@ -45,11 +45,11 @@ const AppNavigation = () => {
 const THEME = {
   dark: false,
   colors: {
-    primary: Colors.primary,
-    background: Colors.white,
-    text: Colors.black,
-    border: Colors.outline,
-    notification: Colors.accent,
+    primary: '#4ec248',
+    background: '#fff',
+    text: '#000',
+    border: "#d1d1d1",
+    notification: "#4ec248",
   },
 };
 

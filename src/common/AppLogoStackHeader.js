@@ -1,23 +1,23 @@
 import React from 'react';
 import { StyleSheet, StatusBar } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Text from './Text';
 import View from './View';
 import Touchable from './Touchable';
 import ChevronLeft from '../assets/icon/edit-chevron-left.svg';
-import { useNavigation } from '@react-navigation/native';
 
 /* =============================================================================
 <AppLogoHeader />
 ============================================================================= */
 const AppLogoHeader = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const styles = getStyles(insets);
 
   const _handleBackPress = () => {
-    // navigation.goBack();/
+    navigation.goBack();
   }
 
   return (
