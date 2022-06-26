@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 
-
 /* =============================================================================
 <Content />
 ============================================================================= */
@@ -12,19 +11,21 @@ const Content = ({
   contentContainerStyle,
   keyboardAvoidingViewProps,
   ...props
-}) => (
-  <ScrollView
-    style={[styles.container, containerStyle]}
-    showsVerticalScrollIndicator={false}
-    contentContainerStyle={[
-      styles.contentContainer,
-      center && styles.center,
-      contentContainerStyle,
-    ]}
-    {...props}>
-    {children}
-  </ScrollView>
-);
+}) => {
+  return (
+    <ScrollView
+      style={[styles.container, containerStyle]}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={[
+        styles.contentContainer,
+        center && styles.center,
+        contentContainerStyle,
+      ]}
+      {...props}>
+      {children}
+    </ScrollView>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

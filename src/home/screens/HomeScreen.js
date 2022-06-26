@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import ProductsData from '../../static/Products';
-import GroceryAppProductItem from '../components/GroceryAppProductItem';
-import { Container, Content, Text, View } from '../../common';
+import HomeProductItem from '../components/HomeProductItem';
+import { Container, Content, AppLogoHeader, View } from '../../common';
 
 /* =============================================================================
-<GroceryAppScreen />
+<HomeScreen />
 ============================================================================= */
-const GroceryAppScreen = () => {
+const HomeScreen = () => {
   const [products, setProducts] = useState(ProductsData);
-  const insets = useSafeAreaInsets();
-  const styles = getStyles(insets);
 
   const _handleUppVote = (id) => {
     setProducts((prevState) => prevState.map((product) => {
@@ -43,12 +40,12 @@ const GroceryAppScreen = () => {
   return (
     <Container>
       <StatusBar translucent barStyle='dark-content' backgroundColor='transparent' />
-      <Content contentContainerStyle={styles.content}>
-        <Text h1 center style={styles.titleTxt1}>Grocery</Text>
-        <Text h2 center style={styles.titleTxt2}>App</Text>
+      <Content>
+        <HomeHeader />
+        <AppLogoHeader />
         <View horizontal style={styles.productsContainer}>
           {products?.map((product) => (
-            <GroceryAppProductItem
+            <HomeProductItem
               key={product.id}
               product={product}
               upvote={_handleUppVote}
@@ -61,19 +58,8 @@ const GroceryAppScreen = () => {
   );
 };
 
-const getStyles = (insets) => StyleSheet.create({
-  content: {
-    marginTop: insets.top + 20,
-  },
-  titleTxt1: {
-    color: '#4ec248',
-  },
-  titleTxt2: {
-    marginTop: -20,
-    marginLeft: '40%',
-  },
+const styles = StyleSheet.create({
   productsContainer: {
-    marginTop: 50,
     flexWrap: 'wrap',
     justifyContent: 'space-between'
   },
@@ -81,4 +67,4 @@ const getStyles = (insets) => StyleSheet.create({
 
 /* Export
 ============================================================================= */
-export default GroceryAppScreen;
+export default HomeScreen;

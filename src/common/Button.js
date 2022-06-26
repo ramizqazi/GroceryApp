@@ -5,7 +5,7 @@ import { StyleSheet, Pressable, Text, ActivityIndicator } from 'react-native';
 /* =============================================================================
 <Button />
 ============================================================================= */
-const Button = ({ loading, title, variant, size, style, btnTxtStyles, onPress }) => {
+const Button = ({ loading, left, right, title, style, btnTxtStyles, onPress }) => {
 
   const _handlePress = () => {
     if (typeof onPress === 'function') {
@@ -14,14 +14,10 @@ const Button = ({ loading, title, variant, size, style, btnTxtStyles, onPress })
   };
 
   return (
-    <Pressable style={[
-      styles.container,
-      size === 'sm' && styles.sm,
-      size === 'lg' && styles.lg,
-      style,
-    ]}
+    <Pressable style={[styles.container, style]}
       onPress={_handlePress}
     >
+      {left}
       {loading ? <ActivityIndicator color='#fff' /> : null}
       {!loading && (
         <Text
@@ -32,6 +28,7 @@ const Button = ({ loading, title, variant, size, style, btnTxtStyles, onPress })
           {title}
         </Text>
       )}
+      {right}
     </Pressable>
   );
 };
@@ -39,19 +36,19 @@ const Button = ({ loading, title, variant, size, style, btnTxtStyles, onPress })
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 5,
-    paddingHorizontal: 15,
-    paddingVertical: 5,
+    height: 50,
+    borderRadius: 50 / 2,
+    paddingHorizontal: 20,
     position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 5,
     justifyContent: 'center',
-    backgroundColor: '#0091D6'
+    backgroundColor: '#4ec248',
   },
   title: {
     fontSize: 16,
     color: '#fff',
+    marginHorizontal: 10,
     textAlign: 'center',
     fontFamily: 'Poppins-SemiBold',
   },

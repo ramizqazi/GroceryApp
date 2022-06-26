@@ -81,25 +81,25 @@ TextInput.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
-    width: '80%',
+    width: '100%',
+    marginBottom: 20,
     backgroundColor: 'transparent',
   },
   content: {
     height: 49,
     width: '100%',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 6,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 12,
     justifyContent: 'center',
-    borderColor: '#999',
+    borderColor: '#d1d1d1',
     backgroundColor: '#fff',
   },
   input: {
     flex: 1,
     height: 49,
-    marginTop: 2,
     fontSize: 14,
     color: '#000',
     fontFamily: 'Poppins-Regular',

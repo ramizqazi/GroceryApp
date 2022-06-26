@@ -4,9 +4,9 @@ import { Image, StyleSheet } from 'react-native';
 import { Button, Card, Text, View } from '../../common';
 
 /* =============================================================================
-<GroceryAppProductItem />
+<HomeProductItem />
 ============================================================================= */
-const GroceryAppProductItem = ({ product, upvote, downvote }) => {
+const HomeProductItem = ({ product, upvote, downvote }) => {
   const productImg = product?.img;
   const productName = product?.name;
   const productPrice = product?.price;
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
 
 /* Export
 ============================================================================= */
-export default GroceryAppProductItem;
+export default HomeProductItem;
