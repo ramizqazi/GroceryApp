@@ -14,13 +14,13 @@ const ImgUploadModal = ({ visible, onClose, onAdd }) => {
 
   const _handleOpenCameraPress = async () => {
     const result = await launchCamera({ mediaType: 'photo' });
-    onAdd(result?.assets)
+    onAdd(result?.assets[0])
     onClose();
   };
 
   const _handleOpenGalleryPress = async () => {
     const result = await launchImageLibrary({ mediaType: 'photo' });;
-    onAdd(result?.assets)
+    onAdd(result?.assets[0])
     onClose();
   };
 

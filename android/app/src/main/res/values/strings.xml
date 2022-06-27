@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GroceryApp</string>
+    <string name="facebook_app_id">427445485914397</string>
+    <string name="facebook_client_token">bbe777aba57658aa3d77530fd71b39e6</string>
 </resources>

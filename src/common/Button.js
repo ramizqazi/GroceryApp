@@ -5,7 +5,7 @@ import { StyleSheet, Pressable, Text, ActivityIndicator } from 'react-native';
 /* =============================================================================
 <Button />
 ============================================================================= */
-const Button = ({ loading, left, right, title, style, btnTxtStyles, onPress }) => {
+const Button = ({ loading, left, right, title, style, btnTxtStyles, onPress, loadingColor }) => {
 
   const _handlePress = () => {
     if (typeof onPress === 'function') {
@@ -18,8 +18,7 @@ const Button = ({ loading, left, right, title, style, btnTxtStyles, onPress }) =
       onPress={_handlePress}
     >
       {left}
-      {loading ? <ActivityIndicator color='#fff' /> : null}
-      {!loading && (
+      {!loading ? (
         <Text
           style={[
             styles.title,
@@ -27,7 +26,7 @@ const Button = ({ loading, left, right, title, style, btnTxtStyles, onPress }) =
           ]}>
           {title}
         </Text>
-      )}
+      ) : <ActivityIndicator style={styles.indicator} color={loadingColor ? loadingColor : 'white'} />}
       {right}
     </Pressable>
   );
@@ -52,6 +51,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Poppins-SemiBold',
   },
+  indicator: {
+    marginHorizontal: 20,
+  }
 });
 
 /* Export

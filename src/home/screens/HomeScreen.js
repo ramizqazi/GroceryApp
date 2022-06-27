@@ -41,7 +41,6 @@ const HomeScreen = () => {
     <Container>
       <StatusBar translucent barStyle='dark-content' backgroundColor='transparent' />
       <Content>
-        <HomeHeader />
         <AppLogoHeader />
         <View horizontal style={styles.productsContainer}>
           {products?.map((product) => (

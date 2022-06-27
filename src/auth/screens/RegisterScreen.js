@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Image, StyleSheet } from 'react-native';
+import FireStore from '@react-native-firebase/storage';
 
 import {
   View,
@@ -13,18 +15,43 @@ import {
 import UploadIcon from '../../assets/icon/edit-upload-icon.svg';
 import ImgUploadModal from '../components/ImgUploadModal';
 
+import { register as registerAction } from '../redux/actions'
+
 /* =============================================================================
 <RegisterScreen />
 ============================================================================= */
-const RegisterScreen = () => {
+const RegisterScreen = ({ register }) => {
   const [modal, setModal] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [image, setImage] = useState();
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const disabled = !firstName || !lastName || !email || !image || !password;
 
   const _toggleModal = () => setModal((prevState) => !prevState);
+
+  const _handleSubmit = async () => {
+    if (!disabled) {
+      setLoading(true)
+      const storageRef = FireStore().ref('profile_pics').child(image.fileName);
+
+      await storageRef.putFile(image.uri);
+
+      const uploadImgUrl = await storageRef.getDownloadURL();
+
+      register({
+        email,
+        password,
+        firstName,
+        lastName,
+        profileImage: uploadImgUrl,
+      });
+      setLoading(false);
+    };
+  };
+
 
   return (
     <Container>
@@ -70,7 +97,7 @@ const RegisterScreen = () => {
           />
         </View>
         <View center>
-          <Button title='Sign up' />
+          <Button title='Sign up' loading={loading} onPress={_handleSubmit} />
         </View>
       </Content>
       <ImgUploadModal visible={modal} onClose={_toggleModal} onAdd={setImage} />
@@ -101,4 +128,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export default RegisterScreen;
+
+const mapDispatchToProps = {
+  register: registerAction,
+}
+
+export default connect(null, mapDispatchToProps)(RegisterScreen);

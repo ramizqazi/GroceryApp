@@ -1,21 +1,42 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
-import { AppLogoHeader, Button, Container, Content, Text, TextInput, Touchable, View } from '../../common';
+import {
+  View,
+  Text,
+  Button,
+  Content,
+  TextInput,
+  Touchable,
+  Container,
+  AppLogoHeader,
+} from '../../common';
+import SocialAuthButton from '../components/SocialAuthButton';
+
+import { getLoading } from '../redux/selectors';
+import { loginWithEmail as loginWithEmailAction } from '../redux/actions';
 
 /* =============================================================================
 <LoginScreen />
 ============================================================================= */
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, loading, loginWithEmail }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const disabled = !email || !password;
 
   const _handleRegisterPress = () => {
     navigation.navigate('Register')
   };
+
   const _handleForgotPasswordPress = () => {
     navigation.navigate('ForgotPassword')
+  };
+
+  const _handleSubmit = () => {
+    if (!disabled) {
+      loginWithEmail(email, password);
+    }
   };
 
   return (
@@ -34,8 +55,10 @@ const LoginScreen = ({ navigation }) => {
           onChange={setPassword}
         />
         <View center>
-          <Button title='Sign in' />
+          <Button loading={loading} title='Sign in' onPress={_handleSubmit} />
         </View>
+        <SocialAuthButton provider="google" />
+        <SocialAuthButton provider="facebook" />
         <Touchable center style={styles.link} onPress={_handleRegisterPress}>
           <Text sm style={styles.linkTxt}>Or Sign up</Text>
         </Touchable>
@@ -56,4 +79,12 @@ const styles = StyleSheet.create({
   }
 })
 
-export default LoginScreen;
+const mapStateToProps = (state) => ({
+  loading: getLoading(state),
+})
+
+const mapDispatchToProps = {
+  loginWithEmail: loginWithEmailAction,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

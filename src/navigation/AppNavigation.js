@@ -1,41 +1,50 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { StatusBar } from 'react-native';
 import FirebaseAuth from '@react-native-firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AuthStack from '../auth/screens/AuthStack';
+import HomeStack from '../home/screens/HomeScreen';
 
-// import { changeAuthState } from '../auth/redux/actions';
+import { getUser } from '../auth/redux/selectors';
+import { changeAuthState as changeAuthStateAction } from '../auth/redux/actions';
 
 const Stack = createNativeStackNavigator();
 
 /* =============================================================================
 <AppNavigation />
 ============================================================================= */
-const AppNavigation = () => {
+const AppNavigation = ({ changeAuthState, authenticated }) => {
   const [initializing, setInitializing] = useState(true);
 
   // firebase user state check 
-  // useEffect(() => {
-  //   FirebaseAuth().onAuthStateChanged(async (user) => {
-  //     if (user) {
-  //       changeAuthState(user.toJSON());
-  //     }
-  //     setInitializing(false);
-  //   })
-  // }, [])
+  useEffect(() => {
+    FirebaseAuth().onAuthStateChanged(async (user) => {
+      if (user) {
+        changeAuthState(user.toJSON());
+      }
+      setInitializing(false);
+    })
+  }, [])
 
-  // if (initializing) {
-  //   return null;
-  // }
+  if (initializing) {
+    return null;
+  }
 
   return (
     <NavigationContainer theme={THEME}>
       <StatusBar translucent barStyle='dark-content' backgroundColor='transparent' />
       <Stack.Navigator
         screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
-        <Stack.Screen name="AuthStack" component={AuthStack} />
+        {authenticated ? (
+          <>
+            <Stack.Screen name="HomeStack" component={HomeStack} />
+          </>
+        ) : (
+          <Stack.Screen name="Auth" component={AuthStack} />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -53,6 +62,13 @@ const THEME = {
   },
 };
 
-/* Export
-============================================================================= */
-export default AppNavigation;
+
+const mapStateToProps = (state) => ({
+  authenticated: !!getUser(state),
+});
+
+const mapDispatchToProps = {
+  changeAuthState: changeAuthStateAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppNavigation);
