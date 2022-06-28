@@ -1,41 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { StatusBar, StyleSheet } from 'react-native';
 
 import ProductsData from '../../static/Products';
 import HomeProductItem from '../components/HomeProductItem';
 import { Container, Content, AppLogoHeader, View } from '../../common';
 
+import { getProducts as getProductsAction } from '../redux/actions';
+import { getProducts as selectProducts } from '../redux/selectors';
+
 /* =============================================================================
 <HomeScreen />
 ============================================================================= */
-const HomeScreen = () => {
-  const [products, setProducts] = useState(ProductsData);
+const HomeScreen = ({ getProducts, products }) => {
 
-  const _handleUppVote = (id) => {
-    setProducts((prevState) => prevState.map((product) => {
-      if (product.id === id) {
-        return {
-          ...product,
-          votes: product.votes + 1,
-        }
-      } else {
-        return product
-      }
-    }))
-  };
-
-  const _handleDownVote = (id) => {
-    setProducts((prevState) => prevState.map((product) => {
-      if (product.id === id) {
-        return {
-          ...product,
-          votes: product.votes > 0 ? product.votes - 1 : 0,
-        }
-      } else {
-        return product
-      }
-    }))
-  };
+  // Get Products
+  useEffect(() => {
+    getProducts();
+  }, [])
 
   return (
     <Container>
@@ -44,12 +26,7 @@ const HomeScreen = () => {
         <AppLogoHeader />
         <View horizontal style={styles.productsContainer}>
           {products?.map((product) => (
-            <HomeProductItem
-              key={product.id}
-              product={product}
-              upvote={_handleUppVote}
-              downvote={_handleDownVote}
-            />
+            <HomeProductItem key={product} id={product} />
           ))}
         </View>
       </Content>
@@ -62,8 +39,17 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between'
   },
-})
+});
+
+const mapStateToProps = (state) => ({
+  products: selectProducts(state),
+});
+
+const mapDispatchToProps = {
+  getProducts: getProductsAction,
+};
+
 
 /* Export
 ============================================================================= */
-export default HomeScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

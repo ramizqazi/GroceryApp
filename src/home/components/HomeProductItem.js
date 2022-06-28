@@ -1,38 +1,32 @@
 import React from 'react';
 import { Dimensions, Image, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
 import { Button, Card, Text, View } from '../../common';
+
+import { getProductById } from '../redux/selectors';
 
 /* =============================================================================
 <HomeProductItem />
 ============================================================================= */
-const HomeProductItem = ({ product, upvote, downvote }) => {
+const HomeProductItem = ({ product }) => {
   const { width, height } = Dimensions.get('window');
   const styles = getStyles(width, height)
-  const productImg = product?.img;
+  const productImg = product?.productImg;
   const productName = product?.name;
   const productPrice = product?.price;
-  const productVotes = product?.votes;
-
-  const _handleUpVotePress = () => {
-    upvote(product.id)
-  };
-
-  const _handleDownVotePress = () => {
-    downvote(product.id)
-  };
 
   return (
     <Card style={styles.container}>
       <Image style={styles.img} source={{ uri: productImg }} />
       <View style={styles.contentContainer}>
         <Text lg>{productName}</Text>
-        <Text md>{productPrice}</Text>
-        <View style={styles.counterContainer} horizontal>
+        <Text md>{`${productPrice} Rs`}</Text>
+        {/* <View style={styles.counterContainer} horizontal>
           <Button style={styles.btn} title='+' onPress={_handleUpVotePress} />
           <Text>{productVotes}</Text>
           <Button style={styles.btn} title='-' onPress={_handleDownVotePress} />
-        </View>
+        </View> */}
       </View>
     </Card>
   );
@@ -40,8 +34,8 @@ const HomeProductItem = ({ product, upvote, downvote }) => {
 
 const getStyles = (WinWidth, WinHeight) => StyleSheet.create({
   container: {
-    minWidth: WinWidth * 0.4,
     marginBottom: 20,
+    minWidth: WinWidth * 0.4,
   },
   contentContainer: {
     paddingHorizontal: 8,
@@ -60,6 +54,10 @@ const getStyles = (WinWidth, WinHeight) => StyleSheet.create({
   }
 })
 
+const mapStateToProps = (state, { id }) => ({
+  product: getProductById(state, { id })
+});
+
 /* Export
 ============================================================================= */
-export default HomeProductItem;
+export default connect(mapStateToProps)(HomeProductItem);
