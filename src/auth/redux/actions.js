@@ -40,7 +40,7 @@ export const loginWithGoogle = (token) => async (dispatch) => {
   try {
     dispatch({ type: constants.GOOGLE_LOGIN.REQUEST });
 
-    const googleCredential = auth.GoogleAuthProvider.credential(token);
+    const googleCredential = await auth.GoogleAuthProvider.credential(token);
 
     await auth().signInWithCredential(googleCredential);
 

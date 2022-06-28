@@ -19,18 +19,15 @@ import {
 <SocialAuthButton />
 ============================================================================= */
 const SocialAuthButton = ({ provider, loginWithFacebook, loginWithGoogle }) => {
-  const [googleProcessing, setGoogleProcessing] = useState(false);
-  const [facebookProcessing, setFacebookProcessing] = useState(false);
 
   const _handleGoogleLogin = async () => {
-    setGoogleProcessing(true);
     try {
       const { idToken } = await GoogleSignin.signIn();
       loginWithGoogle(idToken);
     } catch (error) {
       switch (error.code) {
         case statusCodes.SIGN_IN_CANCELLED:
-          // TODO
+          Alert.alert('Info', 'User cancelled the process');
           break;
         case statusCodes.IN_PROGRESS:
           Alert.alert('Info', 'Sign in already in progress');
@@ -39,14 +36,12 @@ const SocialAuthButton = ({ provider, loginWithFacebook, loginWithGoogle }) => {
           Alert.alert('Info', 'Play services not available or outdated');
           break;
         default:
-          Alert.alert('Info', 'Something went wrong');
+          Alert.alert('Info', error.message);
       }
     }
-    setGoogleProcessing(false);
   };
 
   const _handleFacebookLogin = async () => {
-    setFacebookProcessing(true);
     try {
       const result = await LoginManager.logInWithPermissions([
         'email',
@@ -59,7 +54,6 @@ const SocialAuthButton = ({ provider, loginWithFacebook, loginWithGoogle }) => {
     } catch (e) {
       Alert.alert('Info', 'Something went wrong');
     }
-    setFacebookProcessing(false);
   };
 
 
@@ -70,7 +64,6 @@ const SocialAuthButton = ({ provider, loginWithFacebook, loginWithGoogle }) => {
         style={[styles.btn, styles.googleBtn]}
         btnTxtStyles={styles.googleBtnTxt}
         left={<GoogleIcon />}
-        loading={googleProcessing}
         title='Sign in With Google'
         onPress={_handleGoogleLogin}
       />
@@ -81,7 +74,6 @@ const SocialAuthButton = ({ provider, loginWithFacebook, loginWithGoogle }) => {
     <Button
       style={[styles.btn, styles.facebookBtn]}
       btnTxtStyles={styles.facebookBtnTxt}
-      loading={facebookProcessing}
       title="Sign in With Facebook"
       left={<FacebookIcon />}
       onPress={_handleFacebookLogin}
@@ -92,7 +84,7 @@ const SocialAuthButton = ({ provider, loginWithFacebook, loginWithGoogle }) => {
 const styles = StyleSheet.create({
   btn: {
     marginTop: 15,
-    borderRadius: 5,
+    borderRadius: 15,
     borderWidth: 0,
     shadowColor: "#000",
     shadowOffset: {
@@ -105,10 +97,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   googleBtn: {
-    backgroundColor: '#fff'
+    backgroundColor: '#f76754'
   },
   googleBtnTxt: {
-    color: '#999'
+    color: '#fff'
   },
   facebookBtn: {
     backgroundColor: '#3e8bd6'

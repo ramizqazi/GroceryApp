@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Dimensions, Image, StyleSheet } from 'react-native';
 
 import { Button, Card, Text, View } from '../../common';
 
@@ -7,6 +7,8 @@ import { Button, Card, Text, View } from '../../common';
 <HomeProductItem />
 ============================================================================= */
 const HomeProductItem = ({ product, upvote, downvote }) => {
+  const { width, height } = Dimensions.get('window');
+  const styles = getStyles(width, height)
   const productImg = product?.img;
   const productName = product?.name;
   const productPrice = product?.price;
@@ -27,30 +29,34 @@ const HomeProductItem = ({ product, upvote, downvote }) => {
         <Text lg>{productName}</Text>
         <Text md>{productPrice}</Text>
         <View style={styles.counterContainer} horizontal>
-          <Button title='+' onPress={_handleUpVotePress} />
+          <Button style={styles.btn} title='+' onPress={_handleUpVotePress} />
           <Text>{productVotes}</Text>
-          <Button title='-' onPress={_handleDownVotePress} />
+          <Button style={styles.btn} title='-' onPress={_handleDownVotePress} />
         </View>
       </View>
     </Card>
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (WinWidth, WinHeight) => StyleSheet.create({
   container: {
-    minWidth: 165,
+    minWidth: WinWidth * 0.4,
     marginBottom: 20,
   },
   contentContainer: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
   },
   img: {
     width: '100%',
-    height: 120,
+    height: WinHeight * 0.1,
   },
   counterContainer: {
     marginTop: 10,
     justifyContent: 'space-around'
+  },
+  btn: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   }
 })
 

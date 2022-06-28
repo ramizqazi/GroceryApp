@@ -10,7 +10,7 @@ import configureStore from './redux/configureStore';
 const { persistor, store } = configureStore();
 
 GoogleSignin.configure({
-  webClientId: '934109351600-p68c1ingqqn78truu84c1g05o8282pu8.apps.googleusercontent.com',
+  webClientId: '934109351600-anlfc371ne6vj5shtnlr2ughbn54r90l.apps.googleusercontent.com',
 });
 
 /* =============================================================================
