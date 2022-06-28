@@ -126,6 +126,7 @@ export const register = (info) => async (dispatch) => {
       firstName,
       profileImage,
       userId: auth().currentUser.uid,
+      card: [],
     };
 
     await profileDoc.set(profile);
