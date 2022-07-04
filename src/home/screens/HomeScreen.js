@@ -2,21 +2,22 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { StatusBar, StyleSheet } from 'react-native';
 
-import ProductsData from '../../static/Products';
 import HomeProductItem from '../components/HomeProductItem';
 import { Container, Content, AppLogoHeader, View } from '../../common';
 
 import { getProducts as getProductsAction } from '../redux/actions';
 import { getProducts as selectProducts } from '../redux/selectors';
+import { getProfile as getProfileAction } from '../../profile/redux/actions';
 
 /* =============================================================================
 <HomeScreen />
 ============================================================================= */
-const HomeScreen = ({ getProducts, products }) => {
+const HomeScreen = ({ getProducts, getProfile, products }) => {
 
   // Get Products
   useEffect(() => {
     getProducts();
+    getProfile();
   }, [])
 
   return (
@@ -47,6 +48,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getProducts: getProductsAction,
+  getProfile: getProfileAction,
 };
 
 
